@@ -9,7 +9,10 @@
       text-align: center;
     }
     .container {
-      margin-top: 20px;
+      margin-top: 30px;
+    }
+    #player-inputs {
+      margin-bottom: 20px;
     }
     .board {
       display: grid;
@@ -30,7 +33,7 @@
       cursor: pointer;
     }
     .message {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 1.2rem;
       font-weight: bold;
     }
@@ -38,12 +41,14 @@
 </head>
 <body>
   <div class="container">
+    <!-- Initial Input Form -->
     <div id="player-inputs">
       <input type="text" id="player-1" placeholder="Enter Player 1 Name">
       <input type="text" id="player-2" placeholder="Enter Player 2 Name">
       <button id="submit">Start Game</button>
     </div>
 
+    <!-- Game Section (hidden initially) -->
     <div id="game" style="display:none;">
       <h1>Tic Tac Toe</h1>
       <div class="message"></div>
@@ -80,15 +85,17 @@
       [0,4,8],[2,4,6]
     ];
 
+    // Start Game
     submitBtn.addEventListener("click", () => {
-      player1 = player1Input.value || "Player 1";
-      player2 = player2Input.value || "Player 2";
+      player1 = player1Input.value.trim() || "Player 1";
+      player2 = player2Input.value.trim() || "Player 2";
       currentPlayer = player1;
       document.getElementById("player-inputs").style.display = "none";
       gameDiv.style.display = "block";
       messageDiv.textContent = `${currentPlayer}, you're up`;
     });
 
+    // Handle Cell Click
     cells.forEach((cell, index) => {
       cell.addEventListener("click", () => {
         if (cell.textContent || checkWinner()) return;
@@ -107,6 +114,7 @@
       });
     });
 
+    // Winner Check
     function checkWinner() {
       return winningCombinations.some(combo => {
         return combo.every(i => board[i] === currentPlayer);
